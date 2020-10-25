@@ -30,17 +30,37 @@ def get_board():
     return board
 
 
-def print_board(bo):
+class Box():
     """
-    Function to print the board - requires an iterable bo which is the board
+    Class to represent each individual box
     """
-    for i, row in enumerate(bo):
-        set = grouper(row, BOX_SIZE)
-        print(*set, sep=' | ')
 
-        if (i+1)%BOX_SIZE==0 and i+1>0:
-            print('-'*33)
+    def __init__(self):
+        self.value=0
+        self.possible=[1,2,3,4,5,6,7,8,9]
 
+class Block():
+    """
+    Class to represent a collection of boxes
+    """
+
+class Board():
+    """
+    Class that represents the entire board 
+    """
+    def __init__(self, game_board):
+        self.board = game_board
+    
+    def __repr__(self):
+        for i, row in enumerate(self.board):
+            set = grouper(row, BOX_SIZE)
+            print(*set, sep=' | ')
+
+            if (i+1)%BOX_SIZE==0 and i+1>0:
+                print('-'*33)
+
+
+Sudoku = Board(get_board())
 
 if __name__ == "__main__":
-    print_board(get_board())
+    Sudoku.__repr__()
