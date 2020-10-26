@@ -9,7 +9,7 @@ from more_itertools import grouper
 BOARD_SIZE = 9
 BOX_SIZE = 3 
 
-def get_board():
+def get_board() -> list:
     """
     Function to provide a board for the rest of the functions
     """
@@ -36,13 +36,30 @@ class Box():
     """
 
     def __init__(self):
+        # Value of the box
         self.value=0
+        # Possible candidates for values
         self.possible=[1,2,3,4,5,6,7,8,9]
+        # Row of box
+        self.row = -1
+        # Column of box
+        self.column = -1
+        # Owning Block of box
+        self.block = Block()
 
 class Block():
     """
     Class to represent a collection of boxes
     """
+    
+    def __init__(self):
+        # Row of Block (0-2 in the standard Sudoku board)
+        self.row = -1
+        # Row of Block (0-2 in the standard Sudoku board)
+        self.column = -1
+        # Collection of Boxes owned by this Block
+        self.boxes = []
+
 
 class Board():
     """
@@ -52,6 +69,10 @@ class Board():
         self.board = game_board
     
     def __repr__(self):
+        """
+        Function to print out current block
+        """
+
         for i, row in enumerate(self.board):
             set = grouper(row, BOX_SIZE)
             print(*set, sep=' | ')
@@ -59,6 +80,7 @@ class Board():
             if (i+1)%BOX_SIZE==0 and i+1>0:
                 print('-'*33)
 
+    
 
 Sudoku = Board(get_board())
 
