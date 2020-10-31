@@ -35,11 +35,14 @@ class Box():
     Class to represent each individual box
     """
 
-    def __init__(self):
+    def __init__(self, value):
         # Value of the box
-        self.value=0
+        self.value=value
         # Possible candidates for values
-        self.possible=[1,2,3,4,5,6,7,8,9]
+        if not value:
+            self.possible=[1,2,3,4,5,6,7,8,9]
+        else:
+            self.possible=[]
         # Row of box
         self.row = -1
         # Column of box
@@ -67,7 +70,8 @@ class Board():
     """
     def __init__(self, game_board):
         self.board = game_board
-    
+        # Set up Box and Blocks
+        
     def __repr__(self):
         """
         Function to print out current block
@@ -85,4 +89,5 @@ class Board():
 Sudoku = Board(get_board())
 
 if __name__ == "__main__":
+
     Sudoku.__repr__()
