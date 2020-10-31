@@ -35,7 +35,7 @@ class Box():
     Class to represent each individual box
     """
 
-    def __init__(self, value):
+    def __init__(self, value, row, col):
         # Value of the box
         self.value=value
         # Possible candidates for values
@@ -44,24 +44,30 @@ class Box():
         else:
             self.possible=[]
         # Row of box
-        self.row = -1
+        self.row = row
         # Column of box
-        self.column = -1
+        self.column = col
         # Owning Block of box
-        self.block = Block()
+        self.block = None
+    
+    def __repr__(self):
+        return f"Box, value is {self.value}, location is {self.row}, {self.column} \n"
 
 class Block():
     """
     Class to represent a collection of boxes
     """
     
-    def __init__(self):
+    def __init__(self, boxes, row, col):
         # Row of Block (0-2 in the standard Sudoku board)
-        self.row = -1
+        self.row = row
         # Row of Block (0-2 in the standard Sudoku board)
-        self.column = -1
+        self.column = col
         # Collection of Boxes owned by this Block
-        self.boxes = []
+        self.boxes = boxes
+    
+    def __repr__(self):
+        return f"Block, location is {self.row}, {self.column} \n"
 
 
 class Board():
@@ -71,10 +77,16 @@ class Board():
     def __init__(self, game_board):
         self.board = game_board
         # Set up Box and Blocks
-        
+        self.blocks = []
+        self.boxes = []
+
+        for i, row in enumerate(self.board):
+            for j, col in enumerate(row):
+                self.boxes.append(Box(col, i, j))
+
     def __repr__(self):
         """
-        Function to print out current block
+        Function to print out current block - needs to be converted to a string
         """
 
         for i, row in enumerate(self.board):
@@ -83,11 +95,16 @@ class Board():
 
             if (i+1)%BOX_SIZE==0 and i+1>0:
                 print('-'*33)
-
-    
+        
+    def testing(self):
+        """
+        Function for testing to print out various debugging info
+        """
+        self.__repr__()
+        print(self.boxes)
+        print(self.blocks)
 
 Sudoku = Board(get_board())
 
 if __name__ == "__main__":
-
-    Sudoku.__repr__()
+    Sudoku.testing()
