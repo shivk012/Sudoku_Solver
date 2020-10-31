@@ -35,7 +35,7 @@ class Box():
     Class to represent each individual box
     """
 
-    def __init__(self, value, row, col):
+    def __init__(self, value, row, col, block=None):
         # Value of the box
         self.value=value
         # Possible candidates for values
@@ -48,7 +48,7 @@ class Box():
         # Column of box
         self.column = col
         # Owning Block of box
-        self.block = None
+        self.block = block
     
     def __repr__(self):
         return f"Box, value is {self.value}, location is {self.row}, {self.column} \n"
@@ -58,7 +58,7 @@ class Block():
     Class to represent a collection of boxes
     """
     
-    def __init__(self, boxes, row, col):
+    def __init__(self, row, col, boxes=[]):
         # Row of Block (0-2 in the standard Sudoku board)
         self.row = row
         # Row of Block (0-2 in the standard Sudoku board)
@@ -81,8 +81,27 @@ class Board():
         self.boxes = []
 
         for i, row in enumerate(self.board):
-            for j, col in enumerate(row):
-                self.boxes.append(Box(col, i, j))
+            # Add empty list for 2D List
+            self.boxes.append([])
+            # Add empty list into Block if new row of block
+            if i%BOX_SIZE==0: self.blocks.append([])
+
+            for j, val in enumerate(row):
+                # Add Box to list of boxes - in 2D array format
+                temp_box = Box(val, i, j)
+                self.boxes[i].insert(j, temp_box)
+
+                # Check if top left of a block
+                if i%BOX_SIZE==0 and j%BOX_SIZE==0:
+                    block_row = int(i/BOX_SIZE)
+                    block_col = int(j/BOX_SIZE)
+                    temp_block = Block(block_row, block_col)
+                    self.blocks[block_row].insert(block_col, temp_block)
+                else:
+                    temp_block = # retrieve correct block other temp block remains unset
+                print(temp_block, temp_box)
+                temp_block.boxes.append(temp_box)
+                temp_box.block=temp_block
 
     def __repr__(self):
         """
@@ -104,7 +123,7 @@ class Board():
         print(self.boxes)
         print(self.blocks)
 
-Sudoku = Board(get_board())
-
 if __name__ == "__main__":
+    Sudoku = Board(get_board())
     Sudoku.testing()
+
