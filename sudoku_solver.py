@@ -137,6 +137,7 @@ class Board():
             0 for no correct answers found
             1 for correct answers found
         """
+
         for box in self.boxes[row_n]:
             # Extract values in row
             row_vals = [box.value for box in self.boxes[row_n]]
@@ -144,7 +145,6 @@ class Board():
             for box in self.boxes[row_n]:
                 box.reduce_possible(row_vals)
                 box.solve_value()
-            pass
 
 
     def col_check(self):
@@ -155,6 +155,7 @@ class Board():
             0 for no correct answers found
             1 for correct answers found
         """
+
         pass
 
     def block_check(self):
@@ -172,6 +173,7 @@ class Board():
         Function for testing to print out various debugging info
         """
         self.__repr__()
+        print('\n')
         self.row_check(1)
         self.__repr__()
 
