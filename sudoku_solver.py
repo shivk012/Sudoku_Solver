@@ -99,6 +99,7 @@ class Board():
                     self.blocks[block_row].insert(block_col, temp_block)
                 else:
                     temp_block = self.blocks[block_row][block_col]
+
                 temp_block.boxes.append(temp_box)
                 temp_box.block=temp_block
 
@@ -106,14 +107,32 @@ class Board():
         """
         Function to print out current block - needs to be converted to a string
         """
-
+        out = ''
         for i, row in enumerate(self.board):
             set = grouper(row, BOX_SIZE)
             print(*set, sep=' | ')
 
             if (i+1)%BOX_SIZE==0 and i+1>0:
                 print('-'*33)
-        
+    
+    def row_check(self):
+        """
+        Function to check the row for errors (all unique values) and to set possible unique values for all boxes in the row
+        """
+        pass
+
+    def col_check(self):
+        """
+        Function to check the column for errors (all unique values) and to set possible unique values for all boxes in the column
+        """
+        pass
+
+    def block_check(self):
+        """
+        Function to check the block for errors (all unique values) and to set possible unique values for all boxes in the block
+        """
+        pass
+    
     def testing(self):
         """
         Function for testing to print out various debugging info
