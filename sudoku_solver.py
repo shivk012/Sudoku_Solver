@@ -92,14 +92,13 @@ class Board():
                 self.boxes[i].insert(j, temp_box)
 
                 # Check if top left of a block
+                block_row = int(i / BOX_SIZE)
+                block_col = int(j/BOX_SIZE)
                 if i%BOX_SIZE==0 and j%BOX_SIZE==0:
-                    block_row = int(i/BOX_SIZE)
-                    block_col = int(j/BOX_SIZE)
                     temp_block = Block(block_row, block_col)
                     self.blocks[block_row].insert(block_col, temp_block)
                 else:
-                    temp_block = # retrieve correct block other temp block remains unset
-                print(temp_block, temp_box)
+                    temp_block = self.blocks[block_row][block_col]
                 temp_block.boxes.append(temp_box)
                 temp_box.block=temp_block
 
