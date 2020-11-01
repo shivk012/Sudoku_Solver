@@ -53,6 +53,20 @@ class Box():
     def __repr__(self):
         return f"Box, value is {self.value}, location is {self.row}, {self.column} \n"
 
+    def reduce_possible(self, existing_vals: list):
+        """
+        Function to reduce the possible values by comparing against in input list and removing any matching values
+        """
+        self.possible = [pos_vals for pos_vals in self.possible if pos_vals not in existing_vals]
+
+    def solve_value(self):
+        """
+        Function to set the value of the box if no other possible values remain
+        """
+        if len(self.possible)==1:
+            self.value = self.possible[0]
+            self.possible = []
+
 class Block():
     """
     Class to represent a collection of boxes
@@ -115,31 +129,52 @@ class Board():
             if (i+1)%BOX_SIZE==0 and i+1>0:
                 print('-'*33)
     
-    def row_check(self):
+    def row_check(self, row_n):
         """
-        Function to check the row for errors (all unique values) and to set possible unique values for all boxes in the row
+        Function to check the row for errors (all unique values) and to set possible unique values for all boxes in the row.
+        Will return:
+            -1 for errors
+            0 for no correct answers found
+            1 for correct answers found
         """
-        pass
+        for box in self.boxes[row_n]:
+            # Extract values in row
+            row_vals = [box.value for box in self.boxes[row_n]]
+            # Reduce possible values in the boxes
+            for box in self.boxes[row_n]:
+                box.reduce_possible(row_vals)
+                box.solve_value()
+            pass
+
 
     def col_check(self):
         """
-        Function to check the column for errors (all unique values) and to set possible unique values for all boxes in the column
+        Function to check the column for errors (all unique values) and to set possible unique values for all boxes in the column.
+        Will return:
+            -1 for errors
+            0 for no correct answers found
+            1 for correct answers found
         """
         pass
 
     def block_check(self):
         """
-        Function to check the block for errors (all unique values) and to set possible unique values for all boxes in the block
+        Function to check the block for errors (all unique values) and to set possible unique values for all boxes in the block.
+        Will return:
+            -1 for errors
+            0 for no correct answers found
+            1 for correct answers found
         """
         pass
-    
+
     def testing(self):
         """
         Function for testing to print out various debugging info
         """
         self.__repr__()
-        print(self.boxes)
-        print(self.blocks)
+        self.row_check(1)
+        self.__repr__()
+
 
 if __name__ == "__main__":
     Sudoku = Board(get_board())
